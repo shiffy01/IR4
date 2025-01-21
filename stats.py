@@ -1,7 +1,7 @@
 import pandas as pd
 
 # Load the Excel file (change 'your_file.xlsx' to your actual file name)
-file_path = 'filtered_output.xlsx'
+file_path = 'updated_excel_file.xlsx'
 excel_data = pd.ExcelFile(file_path)
 
 # Dictionary to store statistics for each sheet
@@ -13,17 +13,19 @@ for sheet_name in excel_data.sheet_names:
     df = excel_data.parse(sheet_name)
 
     # Ensure the required columns are present
-    if 'I/P' in df.columns and 'majority' in df.columns:
-        # Group by the two columns and count occurrences
-        counts = df.groupby(['I/P', 'majority']).size().reset_index(name='count')
+    if 'label' in df.columns:
+        # Count the occurrences of each value in the 'label' column
+        value_counts = df['label'].value_counts()
 
-        # Store the statistics for the current sheet
-        statistics[sheet_name] = counts
+        # Print the counts for each value
+        print(f"Value counts in the 'label' column for sheet '{sheet_name}':")
+        for label, count in value_counts.items():
+            print(f"{label}: {count}")
     else:
-        print(f"Sheet '{sheet_name}' is missing the required columns.")
+        print(f"Sheet '{sheet_name}' is missing the required 'label' column.")
+
 
 # Display the results
 for sheet, stats in statistics.items():
     print(f"\nStatistics for sheet: {sheet}")
     print(stats)
-
