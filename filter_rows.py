@@ -11,18 +11,33 @@ sheets = pd.read_excel(input_file, sheet_name=None)
 def filter_rows(df):
     # Identify columns with "sentiment" in the title
     sentiment_cols = [col for col in df.columns if "sentiment" in col]
-
+    print(sentiment_cols)
     def row_filter(row):
         values = row[sentiment_cols].tolist()
-        unique_values = set(values)
+        print(values)
+        # cleaned_words = [word.strip() for word in values if word.strip()]
 
-        # Check the conditions
-        if len(unique_values) == 1:  # All 7 values are the same
+        neg=values.count("NEG")
+        pos=values.count("POS")
+        nue=values.count("NEU")
+        # print("row")
+        # print(neg, pos , nue)
+        if neg==7 or neg==6:
             return True
-        elif len(unique_values) == 2 and "NUE" in unique_values:
-            if values.count("NUE") <= 2 and len(unique_values - {"NUE"}) == 1:
-                return True
+        if pos==7 or pos==6:
+            return True
+        if nue==7 or nue==6:
+            return True
+        if neg==5 and nue==2:
+            return True
+        if pos==5 and nue==2:
+            return True
+        if nue==4:
+            print("nuetral")
+            return True
+
         return False
+
 
     # Apply the filter to the DataFrame
     return df[df.apply(row_filter, axis=1)]

@@ -50,3 +50,12 @@ new_sentence = "Your new sentence here."
 new_features = embed_text(new_sentence)
 prediction = clf.predict([new_features])
 print(f"Prediction: {prediction[0]}")
+
+
+#TODO
+# divide into 5 catagories
+# make sure there is around the same number of each (100)
+# find a bert model
+# run tokenizer... etc and the model
+# fine tuning
+
