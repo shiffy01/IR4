@@ -1,7 +1,7 @@
 import pandas as pd
 
 # Load the Excel file (change 'your_file.xlsx' to your actual file name)
-file_path = 'updated_excel_file.xlsx'
+file_path = 'new_filtered_output.xlsx'
 excel_data = pd.ExcelFile(file_path)
 
 # Dictionary to store statistics for each sheet
@@ -13,16 +13,16 @@ for sheet_name in excel_data.sheet_names:
     df = excel_data.parse(sheet_name)
 
     # Ensure the required columns are present
-    if 'label' in df.columns:
+    if 'majority' in df.columns:
         # Count the occurrences of each value in the 'label' column
-        value_counts = df['label'].value_counts()
+        value_counts = df['majority'].value_counts()
 
         # Print the counts for each value
-        print(f"Value counts in the 'label' column for sheet '{sheet_name}':")
+        print(f"Value counts in the 'majority' column for sheet '{sheet_name}':")
         for label, count in value_counts.items():
             print(f"{label}: {count}")
     else:
-        print(f"Sheet '{sheet_name}' is missing the required 'label' column.")
+        print(f"Sheet '{sheet_name}' is missing the required 'majority' column.")
 
 
 # Display the results

@@ -1,39 +1,19 @@
 import pandas as pd
 
 # Load the Excel file
-input_file = "file_IR3.xlsx"
-output_file = "new_filtered_output.xlsx"
+input_file = "updated_excel_file.xlsx"
+output_file = "neutrals.xlsx"
 
 # Load all sheets into a dictionary of DataFrames
 sheets = pd.read_excel(input_file, sheet_name=None)
 
 # Function to filter rows based on the given criteria
 def filter_rows(df):
-    # Identify columns with "sentiment" in the title
-    sentiment_cols = [col for col in df.columns if "sentiment" in col]
-    print(sentiment_cols)
-    def row_filter(row):
-        values = row[sentiment_cols].tolist()
-        print(values)
-        # cleaned_words = [word.strip() for word in values if word.strip()]
 
-        neg=values.count("NEG")
-        pos=values.count("POS")
-        nue=values.count("NEU")
-        # print("row")
-        # print(neg, pos , nue)
-        if neg>5:
-            return True
-        if pos>4:
-            return True
-        if nue>5:
-            return True
-        if neg==5 and nue==2:
-            return True
-        if pos==4 and nue==2:
+    def row_filter(row):
+        if "NEU" == row["majority"] and row["I/P"]=="P":
             return True
         return False
-
 
     # Apply the filter to the DataFrame
     return df[df.apply(row_filter, axis=1)]
@@ -49,3 +29,6 @@ with pd.ExcelWriter(output_file) as writer:
         filtered_df.to_excel(writer, sheet_name=sheet_name, index=False)
 
 print(f"Filtered data has been written to {output_file}")
+
+
+#positive will be defined not as favorable towards, but as optimistic
