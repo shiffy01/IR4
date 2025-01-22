@@ -1,11 +1,11 @@
 import pandas as pd
 
-# Load the Excel file (change 'your_file.xlsx' to your actual file name)
-file_path = 'new_filtered_output.xlsx'
+# Load the Excel file
+file_path = 'updated_excel_file.xlsx'
 excel_data = pd.ExcelFile(file_path)
 
-# Dictionary to store statistics for each sheet
-statistics = {}
+# Dictionary to store the total counts of each label across all sheets
+total_counts = {}
 
 # Iterate through each sheet in the Excel file
 for sheet_name in excel_data.sheet_names:
@@ -13,19 +13,24 @@ for sheet_name in excel_data.sheet_names:
     df = excel_data.parse(sheet_name)
 
     # Ensure the required columns are present
-    if 'majority' in df.columns:
+    if 'label' in df.columns:
         # Count the occurrences of each value in the 'label' column
-        value_counts = df['majority'].value_counts()
+        value_counts = df['label'].value_counts()
 
         # Print the counts for each value
-        print(f"Value counts in the 'majority' column for sheet '{sheet_name}':")
+        print(f"Value counts in the 'label' column for sheet '{sheet_name}':")
         for label, count in value_counts.items():
             print(f"{label}: {count}")
+            
+            # Add counts to the total_counts dictionary
+            if label in total_counts:
+                total_counts[label] += count
+            else:
+                total_counts[label] = count
     else:
-        print(f"Sheet '{sheet_name}' is missing the required 'majority' column.")
+        print(f"Sheet '{sheet_name}' is missing the required 'label' column.")
 
-
-# Display the results
-for sheet, stats in statistics.items():
-    print(f"\nStatistics for sheet: {sheet}")
-    print(stats)
+# Print the total counts across all sheets
+print("\nTotal value counts across all sheets:")
+for label, total in total_counts.items():
+    print(f"{label}: {total}")
