@@ -2,7 +2,7 @@ import pandas as pd
 
 # Load the Excel file
 input_file = "file_IR3.xlsx"
-output_file = "new_filtered_output.xlsx"
+output_file = "output1.xlsx"
 
 # Load all sheets into a dictionary of DataFrames
 sheets = pd.read_excel(input_file, sheet_name=None)
@@ -19,18 +19,18 @@ def filter_rows(df):
 
         neg=values.count("NEG")
         pos=values.count("POS")
-        nue=values.count("NEU")
+        neu=values.count("NEU")
         # print("row")
         # print(neg, pos , nue)
         if neg>5:
             return True
         if pos>4:
             return True
-        if nue>5:
+        if neu>4:
             return True
-        if neg==5 and nue==2:
+        if neg==5 and neu==2:
             return True
-        if pos==4 and nue==2:
+        if pos==4 and neu==3:
             return True
         return False
 

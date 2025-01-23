@@ -1,7 +1,7 @@
 import pandas as pd
 
 # Load the Excel file
-file_path = 'updated_excel_file.xlsx'
+file_path = 'output2.xlsx'
 excel_data = pd.ExcelFile(file_path)
 
 # Dictionary to store the total counts of each label across all sheets
