@@ -15,7 +15,7 @@ from transformers import (
 os.environ["WANDB_MODE"] = "disabled"
 
 # Load the dataset
-file_path = "/content/shuffled_file.xlsx"  # Replace with your file path
+file_path = "/content/shuffled_file.xlsx"
 df = pd.read_excel(file_path)
 
 # Map sentiments to numerical labels
@@ -81,18 +81,18 @@ def compute_metrics(eval_pred):
 
 # Set up training arguments
 training_args = TrainingArguments(
-    output_dir='./results',
-    num_train_epochs=10,
-    per_device_train_batch_size=16,
-    per_device_eval_batch_size=16,
-    warmup_steps=500,
-    weight_decay=0.01,
-    logging_dir='./logs',
-    logging_steps=10,
-    evaluation_strategy="epoch",
-    save_strategy="epoch",
-    load_best_model_at_end=True,
-    metric_for_best_model="f1"
+    output_dir='./results', # Directory for storing outputs
+    num_train_epochs=10,  # Number of training epochs
+    per_device_train_batch_size=16,  # Batch size for training per device (per GPU/CPU)
+    per_device_eval_batch_size=16,  # Batch size for evaluation per device
+    warmup_steps=500,  # Number of warm-up steps for the learning rate scheduler
+    weight_decay=0.01,  # Strength of weight decay (L2 regularization) to prevent overfitting
+    logging_dir='./logs',  # Directory for storing training logs
+    logging_steps=10,  # Log training metrics every 10 steps
+    evaluation_strategy="epoch",  # Evaluate the model at the end of each epoch
+    save_strategy="epoch",  # Save model checkpoints at the end of each epoch
+    load_best_model_at_end=True,  # Load the best model at the end of training based on the metric
+    metric_for_best_model="f1"  # Metric used to determine the best model (e.g., F1-score)
 )
 
 # Initialize Trainer
@@ -131,7 +131,7 @@ def predict(text):
 df['Predicted Label'] = df['Sentence'].apply(predict)
 
 # Save the updated DataFrame to a new Excel file
-output_file_path = "/content/with_prediction.xlsx"  # Replace with your desired file path
+output_file_path = "/content/with_prediction.xlsx"
 df.to_excel(output_file_path, index=False)
 
 print(f"Updated Excel file saved to {output_file_path}")
