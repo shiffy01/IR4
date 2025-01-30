@@ -136,7 +136,7 @@ def predict(text):
 df['Predicted Label'] = df['Sentence'].apply(predict)
 
 # Save the updated DataFrame to a new Excel file
-output_file_path = "/content/with_prediction.xlsx"
+output_file_path = "/content/with_prediction_good.xlsx"
 df.to_excel(output_file_path, index=False)
 
 print(f"Updated Excel file saved to {output_file_path}")
