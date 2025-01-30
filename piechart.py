@@ -1,4 +1,4 @@
-###########################  SPLITS INTO 4 TABS ACCORDING TO NEWSPAPER  ################################
+#############################  SPLITS INTO 4 TABS ACCORDING TO NEWSPAPER  ################################
 import pandas as pd
 
 # Assuming the dataset is saved in an Excel file
